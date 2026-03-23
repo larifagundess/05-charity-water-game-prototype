@@ -1,13 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charity Water Game</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Charity Water Game</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Welcome to the Charity Water Game Prototype</h1>
-    <script src="script.js"></script>
+
+  <!-- START SCREEN -->
+  <div id="startScreen" class="screen active">
+    <p class="logo">charity: water</p>
+    <h1>Bottle Sort</h1>
+    <p class="subtitle">Clean vs Contaminated</p>
+    <button id="startBtn" class="primary">PLAY</button>
+  </div>
+
+  <!-- GAME SCREEN -->
+  <div id="gameScreen" class="screen">
+    <div class="hud">
+      <div>Score: <span id="score">0</span></div>
+      <div>Time: <span id="time">30</span>s</div>
+      <div>Lives: <span id="lives">3</span></div>
+    </div>
+
+    <div class="timer-bar">
+      <div id="timerFill"></div>
+    </div>
+
+    <div class="game-area">
+      <div class="left">
+        <div class="card">
+          <p class="card-label">Water Item</p>
+          <p id="itemText" class="item-text">Item</p>
+        </div>
+
+        <p id="feedback" class="feedback">Choose the correct category.</p>
+
+        <div class="buttons">
+          <button id="cleanBtn" class="primary">CLEAN</button>
+          <button id="badBtn">CONTAMINATED</button>
+        </div>
+
+        <button id="resetBtn" class="reset-btn">RESET GAME</button>
+      </div>
+
+      <div class="right">
+        <h3>Did You Know?</h3>
+        <p>1 in 10 people lack access to clean water.</p>
+        <p>Clean water changes health, education, and opportunity worldwide.</p>
+        <a
+          href="https://www.charitywater.org/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="learn-link"
+        >
+          Learn More
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- END SCREEN -->
+  <div id="endScreen" class="screen">
+    <div id="confettiContainer" class="confetti-container" aria-hidden="true"></div>
+
+    <h1>Round Complete 🎉</h1>
+    <p class="end-score">Final Score: <strong id="finalScore">0</strong></p>
+    <p id="endMessage" class="end-message"></p>
+    <p>Impact Fact: 1 in 10 people lack access to clean water.</p>
+
+    <div class="end-buttons">
+      <button id="restartBtn">Play Again</button>
+      <a
+        href="https://www.charitywater.org/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="learn-link end-link"
+      >
+        Learn More
+      </a>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>

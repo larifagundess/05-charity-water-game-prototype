@@ -1,5 +1,4 @@
 /* Charity: water Brand Colors
-
 Primary Colors:
 - Yellow:     #FFC907
 - Blue:       #2E9DF7
@@ -11,5 +10,229 @@ Secondary Colors:
 - Red:        #F5402C
 - Dark Green: #159A48
 - Pink:       #F16061
-
 */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  text-align: center;
+  background: #ffffff;
+  color: #111111;
+}
+
+.screen {
+  display: none;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.active {
+  display: block;
+}
+
+.logo {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 22px;
+  margin-bottom: 24px;
+}
+
+button,
+.learn-link {
+  padding: 12px 24px;
+  margin: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid #111111;
+  background: #ffffff;
+  color: #111111;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+button:hover,
+.learn-link:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+.primary {
+  background: #FFC907;
+  border: none;
+}
+
+.hud {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-size: 18px;
+}
+
+.timer-bar {
+  height: 8px;
+  background: #e9e9e9;
+  margin: 14px auto 24px;
+  max-width: 1000px;
+  overflow: hidden;
+}
+
+#timerFill {
+  height: 100%;
+  width: 100%;
+  background: #FFC907;
+  transition: width 0.3s linear;
+}
+
+.game-area {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  margin-top: 10px;
+}
+
+.left,
+.right {
+  width: 100%;
+  max-width: 420px;
+}
+
+.right {
+  background: #f1f1f1;
+  padding: 24px;
+}
+
+.card {
+  background: #f1f1f1;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.card-label {
+  font-size: 14px;
+  margin: 0 0 12px;
+  color: #444;
+}
+
+.item-text {
+  font-size: 30px;
+  margin: 0;
+}
+
+.feedback {
+  min-height: 28px;
+  margin: 18px 0 10px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.feedback.correct {
+  color: #159A48;
+}
+
+.feedback.wrong {
+  color: #F5402C;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.reset-btn {
+  margin-top: 16px;
+}
+
+.learn-link {
+  background: #FFC907;
+  border: none;
+}
+
+.end-score,
+.end-message {
+  font-size: 22px;
+}
+
+.end-buttons {
+  margin-top: 20px;
+}
+
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti {
+  position: fixed;
+  top: -20px;
+  width: 10px;
+  height: 14px;
+  opacity: 0.9;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 700px) {
+  h1 {
+    font-size: 32px;
+  }
+
+  .subtitle {
+    font-size: 20px;
+  }
+
+  .hud {
+    font-size: 16px;
+    padding: 0 8px;
+  }
+
+  .item-text {
+    font-size: 26px;
+  }
+
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .buttons button,
+  .reset-btn,
+  .learn-link,
+  .end-buttons button,
+  .end-buttons .learn-link {
+    width: 100%;
+    max-width: 320px;
+  }
+}
