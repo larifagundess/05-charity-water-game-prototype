@@ -1,238 +1,124 @@
-/* Charity: water Brand Colors
-Primary Colors:
-- Yellow:     #FFC907
-- Blue:       #2E9DF7
+let score = 0;
+let lives = 3;
+let time = 30;
+let currentType = "clean";
+let timer;
 
-Secondary Colors:
-- Light Blue: #8BD1CB
-- Green:      #4FCB53
-- Orange:     #FF902A
-- Red:        #F5402C
-- Dark Green: #159A48
-- Pink:       #F16061
-*/
+const clickSound = document.getElementById("clickSound");
+const winSound = document.getElementById("winSound");
 
-* {
-  box-sizing: border-box;
+const startScreen = document.getElementById("startScreen");
+const gameScreen = document.getElementById("gameScreen");
+const endScreen = document.getElementById("endScreen");
+
+const scoreEl = document.getElementById("score");
+const timeEl = document.getElementById("time");
+const livesEl = document.getElementById("lives");
+const itemText = document.getElementById("itemText");
+const feedback = document.getElementById("feedback");
+const finalScore = document.getElementById("finalScore");
+const timerFill = document.getElementById("timerFill");
+const card = document.getElementById("card");
+
+// BUTTONS
+document.getElementById("startBtn").onclick = startGame;
+document.getElementById("restartBtn").onclick = restart;
+document.getElementById("resetBtn").onclick = startGame;
+document.getElementById("cleanBtn").onclick = () => choose("clean");
+document.getElementById("badBtn").onclick = () => choose("bad");
+
+// ITEMS
+const items = [
+  { name: "Dorm Fountain", type: "clean" },
+  { name: "Filtered Bottle", type: "clean" },
+  { name: "River Water", type: "bad" },
+  { name: "Dirty Runoff", type: "bad" }
+];
+
+// START
+function startGame() {
+  startScreen.classList.remove("active");
+  endScreen.classList.remove("active");
+  gameScreen.classList.add("active");
+
+  score = 0;
+  lives = 3;
+  time = 30;
+
+  updateUI();
+  nextItem();
+
+  clearInterval(timer);
+
+  timer = setInterval(() => {
+    time--;
+    updateUI();
+    timerFill.style.width = (time / 30) * 100 + "%";
+
+    if (time <= 0 || lives <= 0) {
+      endGame();
+    }
+  }, 1000);
 }
 
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  text-align: center;
-  background: #ffffff;
-  color: #111111;
+// CHOOSE
+function choose(choice) {
+  clickSound.currentTime = 0;
+  clickSound.play();
+
+  card.classList.remove("correct", "wrong");
+
+  if (choice === currentType) {
+    score += 10;
+    feedback.textContent = "Correct! +10";
+    card.classList.add("correct");
+  } else {
+    score = Math.max(0, score - 5);
+    lives--;
+    feedback.textContent = "Wrong! -1 life";
+    card.classList.add("wrong");
+  }
+
+  updateUI();
+
+  setTimeout(() => {
+    card.classList.remove("correct", "wrong");
+  }, 300);
+
+  nextItem();
 }
 
-.screen {
-  display: none;
-  min-height: 100vh;
-  padding: 40px 20px;
+// NEXT ITEM
+function nextItem() {
+  const item = items[Math.floor(Math.random() * items.length)];
+  itemText.textContent = item.name;
+  currentType = item.type;
 }
 
-.active {
-  display: block;
+// UPDATE UI
+function updateUI() {
+  scoreEl.textContent = score;
+  timeEl.textContent = time;
+  livesEl.textContent = lives;
 }
 
-.logo {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
+// END GAME
+function endGame() {
+  clearInterval(timer);
 
-h1 {
-  font-size: 36px;
-  margin-bottom: 8px;
-}
+  gameScreen.classList.remove("active");
+  endScreen.classList.add("active");
 
-.subtitle {
-  font-size: 22px;
-  margin-bottom: 24px;
-}
+  finalScore.textContent = score;
 
-button,
-.learn-link {
-  padding: 12px 24px;
-  margin: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  border: 1px solid #111111;
-  background: #ffffff;
-  color: #111111;
-  text-decoration: none;
-  display: inline-block;
-  transition: transform 0.15s ease, opacity 0.15s ease;
-}
-
-button:hover,
-.learn-link:hover {
-  transform: translateY(-1px);
-  opacity: 0.95;
-}
-
-.primary {
-  background: #FFC907;
-  border: none;
-}
-
-.hud {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 0 20px;
-  max-width: 1000px;
-  margin: 0 auto;
-  font-size: 18px;
-}
-
-.timer-bar {
-  height: 8px;
-  background: #e9e9e9;
-  margin: 14px auto 24px;
-  max-width: 1000px;
-  overflow: hidden;
-}
-
-#timerFill {
-  height: 100%;
-  width: 100%;
-  background: #FFC907;
-  transition: width 0.3s linear;
-}
-
-.game-area {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 40px;
-  margin-top: 10px;
-}
-
-.left,
-.right {
-  width: 100%;
-  max-width: 420px;
-}
-
-.right {
-  background: #f1f1f1;
-  padding: 24px;
-}
-
-.card {
-  background: #f1f1f1;
-  min-height: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 20px;
-}
-
-.card-label {
-  font-size: 14px;
-  margin: 0 0 12px;
-  color: #444;
-}
-
-.item-text {
-  font-size: 30px;
-  margin: 0;
-}
-
-.feedback {
-  min-height: 28px;
-  margin: 18px 0 10px;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.feedback.correct {
-  color: #159A48;
-}
-
-.feedback.wrong {
-  color: #F5402C;
-}
-
-.buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  margin-top: 8px;
-}
-
-.reset-btn {
-  margin-top: 16px;
-}
-
-.learn-link {
-  background: #FFC907;
-  border: none;
-}
-
-.end-score,
-.end-message {
-  font-size: 22px;
-}
-
-.end-buttons {
-  margin-top: 20px;
-}
-
-.confetti-container {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.confetti {
-  position: fixed;
-  top: -20px;
-  width: 10px;
-  height: 14px;
-  opacity: 0.9;
-  animation: fall linear forwards;
-}
-
-@keyframes fall {
-  to {
-    transform: translateY(110vh) rotate(720deg);
-    opacity: 1;
+  // PLAY WIN SOUND IF SCORE HIGH
+  if (score >= 50) {
+    winSound.play();
   }
 }
 
-@media (max-width: 700px) {
-  h1 {
-    font-size: 32px;
-  }
-
-  .subtitle {
-    font-size: 20px;
-  }
-
-  .hud {
-    font-size: 16px;
-    padding: 0 8px;
-  }
-
-  .item-text {
-    font-size: 26px;
-  }
-
-  .buttons {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .buttons button,
-  .reset-btn,
-  .learn-link,
-  .end-buttons button,
-  .end-buttons .learn-link {
-    width: 100%;
-    max-width: 320px;
-  }
+// RESTART
+function restart() {
+  endScreen.classList.remove("active");
+  startScreen.classList.add("active");
 }
